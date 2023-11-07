@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Criminal Record</title>
+    <link rel="stylesheet" href="css/create_record.css">
+</head>
+<body>
+    <h2>Create New Criminal Record</h2>
+
+    <?php
+    if (!empty($errors)) {
+        echo "<div class='error-container'>";
+        foreach ($errors as $error) {
+            echo "<p class='error'>$error</p>";
+        }
+        echo "</div>";
+    }
+
+    if (!empty($success_message)) {
+        echo "<p class='success'>$success_message</p>";
+    }
+    ?>
+
+    <!-- Add form for creating a new criminal record -->
+    <form action="create_record.php" method="post">
+        <label for="offence">Criminal Offence:</label>
+        <select name="offence" id="offence" required>
+            <?php
+            foreach ($offences as $offence) {
+                echo "<option value='{$offence['offense_id']}'>{$offence['offense_name']}</option>";
+            }
+            ?>
+        </select><br>
+
+        <label for="sentence">Sentence:</label>
+        <input type="text" name="sentence" id="sentence" required><br>
+
+        <label for="issue_location">Issue At:</label>
+        <input type="text" name="issue_location" id="issue_location" required><br>
+
+        <label for="issue_person">Issue By:</label>
+        <input type="text" name="issue_person" id="issue_person" required><br>
+
+        <label for="issue_date">Issue Date:</label>
+        <input type="text" name="issue_date" id="issue_date" placeholder="yyyy/mm/dd" required><br>
+
+        <input type="submit" value="Save Criminal Record">
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record New Suspect</title>
+    <link rel="stylesheet" href="css/record_suspect.css">
+</head>
+<body>
+    <h2>Record New Suspect</h2>
+    <?php
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            echo "<p class='error-message'>$error</p>";
+        }
+    }
+
+    if (!empty($success_message)) {
+        echo "<p class='success-message'>$success_message</p>";
+    }
+    ?>
+
+    <form action="record_suspect.php" method="post">
+        <label for="suspect_id">Suspect ID:</label>
+        <input type="text" id="suspect_id" name="suspect_id" required><br>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br>
+
+        <input type="submit" value="Record Suspect">
+    </form>
+</body>
+</html>

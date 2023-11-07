@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Criminal Record</title>
+    <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+    <h2>Search Criminal Record</h2>
+
+    <?php
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            echo "<p class='error-message'>$error</p>";
+        }
+    }
+    ?>
+
+    <!-- Add search form -->
+    <form action="search_criminal.php" method="post">
+        Search by ID: <input type="text" name="search_id" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <?php
+    if (!empty($search_result)) {
+        echo "<h3>Search Results</h3>";
+        echo "<center><table>";
+        echo "<tr><th colspan='2'>Suspect Information</th></tr><br>";
+        echo "<tr><td><strong>Suspect ID:</strong></td><td>" . $search_result['suspect']['suspect_id'] . "</td></tr>";
+        echo "<tr><td><strong>ID Number:</strong></td><td>" . $search_result['suspect']['id_number'] . "</td></tr>";
+        echo "<tr><td><strong>First Name:</strong></td><td>" . $search_result['suspect']['first_name'] . "</td></tr>";
+        echo "<tr><td><strong>Last Name:</strong></td><td>" . $search_result['suspect']['last_name'] . "</td></tr>";
+        echo "</table></center>";
+        
+        // Display Criminal Records
+        echo "<h4>Criminal Records</h4>";
+        echo "<center><table>";
+        echo "<tr><th>Offense</th><th>Sentence</th><th>Issue At</th><th>Issue By</th><th>Issue Date</th></tr>";
+        
+        if (isset($search_result['criminal_records']) && !empty($search_result['criminal_records'])) {
+            foreach ($search_result['criminal_records'] as $record) {
+                // Check if $record is an associative array
+                if (is_array($record) && count($record) > 0) {
+                    echo "<tr>";
+                    echo "<td>" . $record['offense'] . "</td>";
+                    echo "<td>" . $record['sentence'] . "</td>";
+                    echo "<td>" . $record['location'] . "</td>";
+                    echo "<td>" . $record['person'] . "</td>";
+                    echo "<td>" . $record['issue_date'] . "</td>";
+                    echo "</tr>";
+                } else {
+                    // Handle if the structure is different
+                    echo "<tr><td colspan='5'>No criminal records found.</td></tr>";
+                }
+            }
+        } else {
+            echo "<tr><td colspan='5'>No criminal records found.</td></tr>";
+        }
+        
+        echo "</table></center>";
+    }
+
+    echo "<form action='create_record.php' method='post'>";
+    echo "<input type='submit' value='New Criminal Record'>";
+    echo "</form>";
+
+    // Logout button
+    echo "<form action='logout.php' method='post'>";
+    echo "<input type='submit' value='Logout'>";
+    echo "</form>";
+    ?>
+</body>
+</html>
